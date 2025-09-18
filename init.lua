@@ -1,3 +1,5 @@
+require("config.lazy")
+
 vim.cmd([[
 set number
 set relativenumber
