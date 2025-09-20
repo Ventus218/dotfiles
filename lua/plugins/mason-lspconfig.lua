@@ -3,7 +3,14 @@
 return {
 	"mason-org/mason-lspconfig.nvim",
 	opts = {
-		ensure_installed = { "lua_ls" },
+		ensure_installed = {
+			-- Lua
+			"lua_ls",
+
+			-- Python
+			"basedpyright", -- LS
+			"ruff", -- Linter + Formatter
+		},
 		automatic_enable = true,
 	},
 	dependencies = {
