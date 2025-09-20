@@ -13,3 +13,8 @@ inoremap <C-l> <Esc>
 vnoremap <C-l> <Esc>
 ]])
 
+-- Inline errors and warnings
+vim.diagnostic.config({ virtual_text = true })
+-- Show higher severity errors first
+vim.diagnostic.config({ severity_sort = true })
+
