@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" },
 	callback = function()
 		-- bo: buffer-scoped options
 		if vim.bo.modifiable and not vim.bo.readonly then
-			vim.cmd.update({ silent = true })
+			vim.cmd.update()
 		end
 	end,
 })
