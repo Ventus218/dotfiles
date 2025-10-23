@@ -33,7 +33,7 @@ inoremap <c-space> <c-x><c-o>
 -- 	end,
 -- })
 
-vim.keymap.set("n", "<leader>s", function()
+vim.keymap.set("n", "<leader>w", function()
 	vim.cmd.write()
 end)
 
