@@ -4,7 +4,9 @@ set -e
 
 # Assuming this script is in the dotfile repo root
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
+
 XDG_CONFIG_HOME="$HOME/.config"
+mkdir -p $XDG_CONFIG_HOME
 
 create_symlinks() {
   local items=("$@")
