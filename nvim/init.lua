@@ -17,6 +17,8 @@ set shiftwidth=4
 set softtabstop=-1
 set expandtab
 
+set splitbelow
+set splitright
 set winborder=rounded
 colorscheme catppuccin
 language en_US.UTF-8
