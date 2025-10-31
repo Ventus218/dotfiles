@@ -1,7 +1,7 @@
 # Only run on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # needed for brew
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(brew shellenv)"
     export XDG_RUNTIME_DIR="$HOME"/Library/Caches/TemporaryItems
 fi
 
