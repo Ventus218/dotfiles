@@ -9,6 +9,14 @@ vim.cmd([[
 set number
 set relativenumber
 set scrolloff=7
+
+set smartindent
+filetype indent on
+
+set shiftwidth=4
+set softtabstop=-1
+set expandtab
+
 set winborder=rounded
 colorscheme catppuccin
 language en_US.UTF-8
@@ -21,20 +29,20 @@ inoremap <c-space> <c-x><c-o>
 ]])
 
 
--- -- Automatic save
--- vim.o.autowriteall = true
--- vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
--- 	pattern = "*", -- save every file
--- 	callback = function()
--- 		-- bo: buffer-scoped options
--- 		if vim.bo.modifiable and not vim.bo.readonly then
--- 			vim.cmd.update()
--- 		end
--- 	end,
--- })
+-- Automatic save
+vim.o.autowriteall = true
+vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
+    pattern = "*", -- save every file
+    callback = function()
+        -- bo: buffer-scoped options
+        if vim.bo.modifiable and not vim.bo.readonly then
+            vim.cmd.update()
+        end
+    end,
+})
 
 vim.keymap.set("n", "<leader>w", function()
-	vim.cmd.write()
+    vim.cmd.write()
 end)
 
 -- Inline errors and warnings
