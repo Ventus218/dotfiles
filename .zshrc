@@ -79,6 +79,8 @@ zstyle ':completion:*' menu select
 # ~~~~~~~~~~~~~~~ Sourcing .zshrc.local ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+# In case some configuration should not be commited to the dotfiles repo
+# we source it from a .zshrc.local file
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
 fi
