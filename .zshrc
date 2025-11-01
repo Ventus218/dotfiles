@@ -44,9 +44,9 @@ setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
 
 # Pure (https://github.com/sindresorhus/pure)
 if [[ "$OSTYPE" == darwin* ]]; then
-  fpath+=("$(brew --prefix)/share/zsh/site-functions")
+    fpath+=("$(brew --prefix)/share/zsh/site-functions")
 else
-  fpath+=($HOME/.zsh/pure)
+    fpath+=($HOME/.zsh/pure)
 fi
 autoload -U promptinit; promptinit
 prompt pure
@@ -82,5 +82,5 @@ zstyle ':completion:*' menu select
 # In case some configuration should not be commited to the dotfiles repo
 # we source it from a .zshrc.local file
 if [ -f "$HOME/.zshrc.local" ]; then
-  source "$HOME/.zshrc.local"
+    source "$HOME/.zshrc.local"
 fi
