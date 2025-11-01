@@ -4,7 +4,16 @@ export VISUAL=nvim
 export EDITOR=nvim
 
 # Directories
-export DOTFILES="$GHREPOS/dotfiles"
+
+# Follow .zshrc symlink
+DOTFILES=$(readlink "$HOME/.zshrc")
+if [ -n "$DOTFILES" ]; then
+    # We assume its target is inside the dotfiles repo
+    export DOTFILES=$(dirname "$DOTFILES")
+else
+    echo "Unable to find the dotfiles repo"
+    unset DOTFILES
+fi
 
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
