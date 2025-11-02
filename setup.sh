@@ -6,7 +6,7 @@ set -e
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
 
 XDG_CONFIG_HOME="$HOME/.config"
-mkdir -p $XDG_CONFIG_HOME
+mkdir -p "$XDG_CONFIG_HOME"
 
 create_symlinks() {
     for ITEM in "$@"; do
@@ -46,24 +46,24 @@ DISTRO=
 # FEDORA=Fedora
 
 case "$(uname)" in
-    Darwin)
-        OS=$MACOS
-        ;;
-    Linux)
-        OS=$LINUX
-        # Here we may do additional checks to detect the distribution
-        ;;
-    *)
-        echo "Unexpected operating system $(uname)"
-        exit 1
-        ;;
+Darwin)
+    OS=$MACOS
+    ;;
+Linux)
+    OS=$LINUX
+    # Here we may do additional checks to detect the distribution
+    ;;
+*)
+    echo "Unexpected operating system $(uname)"
+    exit 1
+    ;;
 esac
 
-if [ -z $DISTRO ]; then
+if [ -z "$DISTRO" ]; then
     DISTRO=$OS
 fi
 
-if [[ "$DISTRO" == "$MACOS" ]]; then
+if [ "$DISTRO" = "$MACOS" ]; then
     # install brew
     # TODO: use POSIX tool
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -72,11 +72,11 @@ fi
 # ~~~~~~~~~~~~~~~~~ Install Pure (propmt theme) ~~~~~~~~~~~~~~~~~
 
 case $OS in
-    $MACOS)
-        brew install pure
-        ;;
-    $LINUX)
-        mkdir -p "$HOME/.zsh"
-        git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
-        ;;
+"$MACOS")
+    brew install pure
+    ;;
+"$LINUX")
+    mkdir -p "$HOME/.zsh"
+    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+    ;;
 esac
