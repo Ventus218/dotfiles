@@ -31,17 +31,17 @@ inoremap <c-space> <c-x><c-o>
 ]])
 
 
--- Automatic save
-vim.o.autowriteall = true
-vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
-    pattern = "*", -- save every file
-    callback = function()
-        -- bo: buffer-scoped options
-        if vim.bo.modifiable and not vim.bo.readonly then
-            vim.cmd.update()
-        end
-    end,
-})
+-- -- Automatic save
+-- vim.o.autowriteall = true
+-- vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
+--     pattern = "*", -- save every file
+--     callback = function()
+--         -- bo: buffer-scoped options
+--         if vim.bo.modifiable and not vim.bo.readonly then
+--             vim.cmd.update()
+--         end
+--     end,
+-- })
 
 vim.keymap.set("n", "<leader>w", function()
     vim.cmd.write()
