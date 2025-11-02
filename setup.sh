@@ -69,7 +69,14 @@ if [[ "$DISTRO" == "$MACOS" ]]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# ~~~~~~~~~~~~~~~~~ Install Pure (propmt theme) ~~~~~~~~~~~~~~~~~
 
-# install pure (prompt theme)
-# MacOS: brew install pure
-# Linux: mkdir -p "$HOME/.zsh"; git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+case $OS in
+    $MACOS)
+        brew install pure
+        ;;
+    $LINUX)
+        mkdir -p "$HOME/.zsh"
+        git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+        ;;
+esac
