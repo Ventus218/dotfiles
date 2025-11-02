@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -9,31 +9,29 @@ XDG_CONFIG_HOME="$HOME/.config"
 mkdir -p $XDG_CONFIG_HOME
 
 create_symlinks() {
-    local items=("$@")
-    for item in "${items[@]}"; do
-        IFS=':' read -r source target <<<"$item"
-        if [ -L "$target" ]; then
-            echo "Removing existing symlink $target"
-            unlink "$target"
-        elif [ -d "$target" ]; then
-            echo "Warning: $target is a directory. Skipping..."
+    for ITEM in "$@"; do
+        SOURCE=$(echo "$ITEM" | cut -d':' -f1)
+        TARGET=$(echo "$ITEM" | cut -d':' -f2)
+        if [ -L "$TARGET" ]; then
+            echo "Removing existing symlink $TARGET"
+            unlink "$TARGET"
+        elif [ -d "$TARGET" ]; then
+            echo "Warning: $TARGET is a directory. Skipping..."
             continue
-        elif [ -e "$target" ]; then
-            echo "Warning: $target already exists. Skipping..."
+        elif [ -e "$TARGET" ]; then
+            echo "Warning: $TARGET already exists. Skipping..."
             continue
         fi
-        ln -s "$DOTFILES_DIR/$source" "$target"
-        echo "Created symlink for $source"
+        ln -s "$DOTFILES_DIR/$SOURCE" "$TARGET"
+        echo "Created symlink for $SOURCE"
     done
 }
 
-common_items=(
-    "nvim:$XDG_CONFIG_HOME/nvim"
-    ".zprofile:$HOME/.zprofile"
+create_symlinks \
+    "nvim:$XDG_CONFIG_HOME/nvim" \
+    ".zprofile:$HOME/.zprofile" \
     ".zshrc:$HOME/.zshrc"
-)
 
-create_symlinks "${common_items[@]}"
 
 # MacOS specific setup
 if [[ "$OSTYPE" == darwin* ]]; then
