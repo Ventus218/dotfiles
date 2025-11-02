@@ -32,16 +32,43 @@ create_symlinks \
     ".zprofile:$HOME/.zprofile" \
     ".zshrc:$HOME/.zshrc"
 
+# ~~~~~~~~~~~~~~~~~ Detecting OS and DISTRO ~~~~~~~~~~~~~~~~~
 
-# MacOS specific setup
-if [[ "$OSTYPE" == darwin* ]]; then
-    :
+OS=
+# OS will be set to one of the following values in order to ease switch cases
+MACOS=Darwin
+LINUX=Linux
+
+DISTRO=
+# DISTRO will be set to one of the following values or to OS if distros
+# of that OS do not exist
+# UBUNTU=Ubuntu
+# FEDORA=Fedora
+
+case "$(uname)" in
+    Darwin)
+        OS=$MACOS
+        ;;
+    Linux)
+        OS=$LINUX
+        # Here we may do additional checks to detect the distribution
+        ;;
+    *)
+        echo "Unexpected operating system $(uname)"
+        exit 1
+        ;;
+esac
+
+if [ -z $DISTRO ]; then
+    DISTRO=$OS
 fi
 
-# Packages
+if [[ "$DISTRO" == "$MACOS" ]]; then
+    # install brew
+    # TODO: use POSIX tool
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# install brew
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # install pure (prompt theme)
 # MacOS: brew install pure
