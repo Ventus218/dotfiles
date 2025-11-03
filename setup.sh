@@ -32,16 +32,22 @@ create_symlinks \
     ".zprofile:$HOME/.zprofile" \
     ".zshrc:$HOME/.zshrc"
 
-# ~~~~~~~~~~~~~~~~~ Detecting OS and DISTRO ~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~ Detecting OS, DISTRO_BASE and DISTRO ~~~~~~~~~~~~~~~~~
 
-OS=
 # OS will be set to one of the following values in order to ease switch cases
+OS=
 MACOS=Darwin
 LINUX=Linux
 
-DISTRO=
-# DISTRO will be set to one of the following values or to OS if distros
+# DISTRO_BASE will be set to one of the following values or to OS if distros
 # of that OS do not exist
+DISTRO_BASE=
+DEBIAN=Debian
+# RED_HAT=RedHat
+
+# DISTRO will be set to one of the following values or to DISTRO_BASE
+# if it was impossible to detect a specific distro
+DISTRO=
 # UBUNTU=Ubuntu
 # FEDORA=Fedora
 
@@ -51,7 +57,13 @@ Darwin)
     ;;
 Linux)
     OS=$LINUX
-    # Here we may do additional checks to detect the distribution
+    if command_exists apt; then
+        DISTRO_BASE=$DEBIAN
+    else
+        echo "Unexpected distribution. Right now only Debian-based (apt) distros are supported."
+        exit 1
+    fi
+    # Here we may do additional checks to set DISTRO
     ;;
 *)
     echo "Unexpected operating system $(uname)"
@@ -59,8 +71,11 @@ Linux)
     ;;
 esac
 
+if [ -z "$DISTRO_BASE" ]; then
+    DISTRO_BASE=$OS
+fi
 if [ -z "$DISTRO" ]; then
-    DISTRO=$OS
+    DISTRO=$DISTRO_BASE
 fi
 
 if [ "$DISTRO" = "$MACOS" ]; then
