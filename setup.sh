@@ -110,7 +110,7 @@ check_tool_or_exit() {
 if [ "$DISTRO_BASE" = "$MACOS" ]; then
     echo Installing Homebrew...
     check_tool_or_exit curl
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 
