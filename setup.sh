@@ -38,6 +38,11 @@ command_exists() {
     command -v "$@" >/dev/null
 }
 
+# This way if sudo does not exists we can make it a nop
+if ! command_exists sudo; then
+    sudo() { "$@"; }
+fi
+
 # ~~~~~~~~~~~~~~~~~ Detecting OS, DISTRO_BASE and DISTRO ~~~~~~~~~~~~~~~~~
 
 # OS will be set to one of the following values in order to ease switch cases
@@ -107,6 +112,48 @@ if [ "$DISTRO_BASE" = "$MACOS" ]; then
     echo Installing Homebrew...
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+
+# ~~~~~~~~~~~~~~~~~ Installing main development tools ~~~~~~~~~~~~~~~~~
+
+echo "Installing main development tools..."
+COMMON="git"
+case $DISTRO_BASE in
+"$MACOS")
+    # shellcheck disable=SC2086
+    brew install $COMMON
+
+    brew install node@24
+
+    brew install nvim
+    ;;
+"$DEBIAN")
+    apt update
+    # shellcheck disable=SC2086
+    apt install -y $COMMON
+
+    apt install -y zsh
+    chsh -s zsh
+
+    sudo apt-get install -y curl
+    curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
+    # Original command was this, hope removing -E doesn't break anything
+    # curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+    ARCH=$(uname -m)
+    [ "$ARCH" != "x86_64" ] && ARCH="arm64"
+    NVIM_APPIMAGE="nvim-linux-$ARCH.appimage"
+    curl -LO "https://github.com/neovim/neovim/releases/latest/download/$NVIM_APPIMAGE"
+    chmod u+x "$NVIM_APPIMAGE"
+    "./$NVIM_APPIMAGE" --appimage-extract
+    rm "$NVIM_APPIMAGE"
+    sudo mv squashfs-root /nvim-appimage
+    sudo ln -s /nvim-appimage/AppRun /usr/bin/nvim
+    unset ARCH
+    ;;
+esac
+unset COMMON
 
 # ~~~~~~~~~~~~~~~~~ Install Pure (propmt theme) ~~~~~~~~~~~~~~~~~
 
