@@ -32,6 +32,12 @@ create_symlinks \
     ".zprofile:$HOME/.zprofile" \
     ".zshrc:$HOME/.zshrc"
 
+# ~~~~~~~~~~~~~~~~~ Util functions ~~~~~~~~~~~~~~~~~
+
+command_exists() {
+    command -v "$@" >/dev/null
+}
+
 # ~~~~~~~~~~~~~~~~~ Detecting OS, DISTRO_BASE and DISTRO ~~~~~~~~~~~~~~~~~
 
 # OS will be set to one of the following values in order to ease switch cases
@@ -78,9 +84,27 @@ if [ -z "$DISTRO" ]; then
     DISTRO=$DISTRO_BASE
 fi
 
-if [ "$DISTRO" = "$MACOS" ]; then
-    # install brew
-    # TODO: use POSIX tool
+# ~~~~~~~~~~~~~~~~~ Check tools needed for setup ~~~~~~~~~~~~~~~~~
+
+check_tool_or_exit() {
+    EXIT=false
+    for TOOL in "$@"; do
+        if ! command_exists "$TOOL"; then
+            echo "$TOOL is needed for this setup, install it and re-run this script"
+            EXIT=true
+        fi
+    done
+    if $EXIT; then
+        exit 1
+    fi
+    unset EXIT
+    unset TOOL
+}
+
+check_tool_or_exit curl
+
+if [ "$DISTRO_BASE" = "$MACOS" ]; then
+    echo Installing Homebrew...
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
