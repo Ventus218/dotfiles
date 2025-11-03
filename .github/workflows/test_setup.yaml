@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  test-setup:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["macos-latest", "ubuntu-latest"]
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./setup.sh
