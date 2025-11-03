@@ -106,10 +106,10 @@ check_tool_or_exit() {
     unset TOOL
 }
 
-check_tool_or_exit curl
 
 if [ "$DISTRO_BASE" = "$MACOS" ]; then
     echo Installing Homebrew...
+    check_tool_or_exit curl
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
@@ -136,6 +136,7 @@ case $DISTRO_BASE in
     chsh -s zsh
 
     sudo apt-get install -y curl
+
     curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
     # Original command was this, hope removing -E doesn't break anything
     # curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
