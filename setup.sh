@@ -133,7 +133,7 @@ case $DISTRO_BASE in
     sudo apt-get install -y $COMMON
 
     sudo apt-get install -y zsh
-    chsh -s zsh
+    chsh -s zsh || echo "Unable to set zsh as default shell"
 
     sudo apt-get install -y curl
 
