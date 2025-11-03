@@ -68,7 +68,7 @@ Darwin)
     ;;
 Linux)
     OS=$LINUX
-    if command_exists apt; then
+    if command_exists apt-get; then
         DISTRO_BASE=$DEBIAN
     else
         echo "Unexpected distribution. Right now only Debian-based (apt) distros are supported."
@@ -128,11 +128,11 @@ case $DISTRO_BASE in
     brew install nvim
     ;;
 "$DEBIAN")
-    apt update
+    sudo apt-get update
     # shellcheck disable=SC2086
-    apt install -y $COMMON
+    sudo apt-get install -y $COMMON
 
-    apt install -y zsh
+    sudo apt-get install -y zsh
     chsh -s zsh
 
     sudo apt-get install -y curl
