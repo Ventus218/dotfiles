@@ -19,6 +19,7 @@ return {
             },
             -- We generally prioritize the lsp formatter and use these as fallbacks
             default_format_opts = { lsp_format = "first" },
+            format_on_save = {},
         })
         -- formatexpr is used when typing "gq" and now triggers conform
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
