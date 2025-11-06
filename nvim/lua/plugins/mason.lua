@@ -40,6 +40,9 @@ return {
         },
         opts = {
             ensure_installed = {
+                -- Multiple languages
+                "prettier", -- Formatter
+
                 -- Shell
                 "shellcheck", -- Linter
                 "shfmt",      -- Formatter
