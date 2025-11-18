@@ -132,7 +132,6 @@ case $DISTRO_BASE in
     sudo apt-get install -y $COMMON
 
     sudo apt-get install -y zsh
-    chsh -s zsh || echo "Unable to set zsh as default shell"
 
     sudo apt-get install -y curl
 
@@ -147,7 +146,6 @@ case $DISTRO_BASE in
     sudo dnf -y install $COMMON
 
     sudo dnf -y install zsh
-    chsh -s zsh || echo "Unable to set zsh as default shell"
 
     sudo dnf -y install curl
 
@@ -157,6 +155,13 @@ case $DISTRO_BASE in
     ;;
 esac
 unset COMMON
+
+echo Setting zsh as default shell...
+case $OS in
+"$LINUX")
+    chsh -s "$(command -v zsh)" || echo "Unable to set zsh as default shell"
+    ;;
+esac
 
 echo Installing NeoVim...
 case $OS in
