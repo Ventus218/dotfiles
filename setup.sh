@@ -162,24 +162,26 @@ case $OS in
     ;;
 esac
 
-echo Installing NeoVim...
-case $OS in
-"$MACOS")
-    brew install nvim
-    ;;
-"$LINUX")
-    ARCH=$(uname -m)
-    [ "$ARCH" != "x86_64" ] && ARCH="arm64"
-    NVIM_APPIMAGE="nvim-linux-$ARCH.appimage"
-    curl -LO "https://github.com/neovim/neovim/releases/latest/download/$NVIM_APPIMAGE"
-    chmod u+x "$NVIM_APPIMAGE"
-    "./$NVIM_APPIMAGE" --appimage-extract
-    rm "$NVIM_APPIMAGE"
-    sudo mv squashfs-root /nvim-appimage
-    sudo ln -s /nvim-appimage/AppRun /usr/bin/nvim
-    unset ARCH
-    ;;
-esac
+if ! command_exists nvim; then
+    echo Installing NeoVim...
+    case $OS in
+    "$MACOS")
+        brew install nvim
+        ;;
+    "$LINUX")
+        ARCH=$(uname -m)
+        [ "$ARCH" != "x86_64" ] && ARCH="arm64"
+        NVIM_APPIMAGE="nvim-linux-$ARCH.appimage"
+        curl -LO "https://github.com/neovim/neovim/releases/latest/download/$NVIM_APPIMAGE"
+        chmod u+x "$NVIM_APPIMAGE"
+        "./$NVIM_APPIMAGE" --appimage-extract
+        rm "$NVIM_APPIMAGE"
+        sudo mv squashfs-root /nvim-appimage
+        sudo ln -s /nvim-appimage/AppRun /usr/bin/nvim
+        unset ARCH
+        ;;
+    esac
+fi
 
 # ~~~~~~~~~~~~~~~~~ Install Pure (propmt theme) ~~~~~~~~~~~~~~~~~
 
@@ -189,6 +191,11 @@ case $OS in
     ;;
 "$LINUX")
     mkdir -p "$HOME/.zsh"
-    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+    PURE_DIR="$HOME/.zsh/pure"
+    if [ -d "$PURE_DIR" ]; then
+        echo "Pure (prompt theme) already installed in $PURE_DIR"
+    else
+        git clone https://github.com/sindresorhus/pure.git "$PURE_DIR"
+    fi
     ;;
 esac
