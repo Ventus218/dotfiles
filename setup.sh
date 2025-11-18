@@ -54,13 +54,14 @@ LINUX=Linux
 # of that OS do not exist
 DISTRO_BASE=
 DEBIAN=Debian
+FEDORA=Fedora
 # RED_HAT=RedHat
 
 # DISTRO will be set to one of the following values or to DISTRO_BASE
 # if it was impossible to detect a specific distro
 DISTRO=
 # UBUNTU=Ubuntu
-# FEDORA=Fedora
+# NOBARA=Nobara
 
 case "$(uname)" in
 Darwin)
@@ -70,6 +71,8 @@ Linux)
     OS=$LINUX
     if command_exists apt-get; then
         DISTRO_BASE=$DEBIAN
+    elif command_exists dnf; then
+        DISTRO_BASE=$FEDORA
     else
         echo "Unexpected distribution. Right now only Debian-based (apt) distros are supported."
         exit 1
@@ -106,13 +109,11 @@ check_tool_or_exit() {
     unset TOOL
 }
 
-
 if [ "$DISTRO_BASE" = "$MACOS" ]; then
     echo Installing Homebrew...
     check_tool_or_exit curl
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-
 
 # ~~~~~~~~~~~~~~~~~ Installing main development tools ~~~~~~~~~~~~~~~~~
 
@@ -124,8 +125,6 @@ case $DISTRO_BASE in
     brew install $COMMON
 
     brew install node@24
-
-    brew install nvim
     ;;
 "$DEBIAN")
     sudo apt-get update
@@ -141,7 +140,16 @@ case $DISTRO_BASE in
     # Original command was this, hope removing -E doesn't break anything
     # curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
     sudo apt-get install -y nodejs
+    ;;
+esac
+unset COMMON
 
+echo Installing NeoVim...
+case $OS in
+"$MACOS")
+    brew install nvim
+    ;;
+"$LINUX")
     ARCH=$(uname -m)
     [ "$ARCH" != "x86_64" ] && ARCH="arm64"
     NVIM_APPIMAGE="nvim-linux-$ARCH.appimage"
@@ -154,7 +162,6 @@ case $DISTRO_BASE in
     unset ARCH
     ;;
 esac
-unset COMMON
 
 # ~~~~~~~~~~~~~~~~~ Install Pure (propmt theme) ~~~~~~~~~~~~~~~~~
 
