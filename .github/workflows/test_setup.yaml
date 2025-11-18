@@ -10,3 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: ./setup.sh
+
+  test-setup-on-distros:
+    name: ${{ matrix.distro }}
+    runs-on: "ubuntu-latest"
+    container:
+      image: ${{ matrix.distro }}
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: ["fedora:latest", "fedora:44"]
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./setup.sh
