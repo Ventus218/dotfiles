@@ -141,6 +141,20 @@ case $DISTRO_BASE in
     # curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
     sudo apt-get install -y nodejs
     ;;
+"$FEDORA")
+    sudo dnf update
+    # shellcheck disable=SC2086
+    sudo dnf install -y $COMMON
+
+    sudo dnf install -y zsh
+    chsh -s zsh || echo "Unable to set zsh as default shell"
+
+    sudo dnf install -y curl
+
+    sudo dnf install -y curl
+    curl -fsSL https://rpm.nodesource.com/setup_24.x | sudo bash -
+    sudo dnf install -y nodejs
+    ;;
 esac
 unset COMMON
 
