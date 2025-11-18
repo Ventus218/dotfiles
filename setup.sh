@@ -141,7 +141,6 @@ case $DISTRO_BASE in
     sudo apt-get install -y nodejs
     ;;
 "$FEDORA")
-    sudo dnf -y update
     # shellcheck disable=SC2086
     sudo dnf -y install $COMMON
 
