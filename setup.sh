@@ -29,6 +29,7 @@ create_symlinks() {
 
 create_symlinks \
     "nvim:$XDG_CONFIG_HOME/nvim" \
+    "ghostty:$XDG_CONFIG_HOME/ghostty" \
     ".zprofile:$HOME/.zprofile" \
     ".zshrc:$HOME/.zshrc"
 
