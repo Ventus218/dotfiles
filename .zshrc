@@ -16,6 +16,18 @@ else
 fi
 
 
+# ~~~~~~~~~~~~~~~ VI mode ~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Activate vi mode
+bindkey -v
+
+# Allow backspace to delete already inserted text
+bindkey -M viins '^?' backward-delete-char # default is "vi-backward-delete-char"
+
+# Ctrl-L acts like Esc
+bindkey -M viins '^L' vi-cmd-mode
+bindkey -M vicmd '^L' vi-cmd-mode
+
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
