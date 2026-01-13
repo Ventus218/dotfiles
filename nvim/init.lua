@@ -8,6 +8,7 @@ require("config.lazy")
 vim.cmd([[
 set number
 set relativenumber
+set nohls
 set scrolloff=7
 
 set smartindent
@@ -51,4 +52,3 @@ end)
 vim.diagnostic.config({ virtual_text = true })
 -- Show higher severity errors first
 vim.diagnostic.config({ severity_sort = true })
-
