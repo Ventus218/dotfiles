@@ -25,7 +25,10 @@ return {
                 "ruff",         -- Linter + Formatter (partially an LS)
 
                 -- Shell
-                "bashls", -- LS
+                "bashls",
+
+                -- GH Actions
+                "gh_actions_ls",
             },
             automatic_enable = true,
         },
