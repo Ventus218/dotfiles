@@ -82,7 +82,7 @@ local setup = {
             { "hrsh7th/cmp-vsnip" },
             { "hrsh7th/vim-vsnip" },
         },
-        ft = { "scala", "sbt", "java" },
+        ft = { "scala", "sbt" },
         opts = function()
             local cmp = require("cmp")
             -- Override global nvim-cmp snippet configs
