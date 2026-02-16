@@ -52,6 +52,9 @@ return {
                 -- Shell
                 "shellcheck", -- Linter
                 "shfmt",      -- Formatter
+
+                -- Tex
+                "tex-fmt", -- Formatter
             },
         },
     }
