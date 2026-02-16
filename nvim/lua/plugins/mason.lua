@@ -29,6 +29,9 @@ return {
 
                 -- GH Actions
                 "gh_actions_ls",
+
+                -- Java
+                "jdtls",
             },
             automatic_enable = true,
         },
