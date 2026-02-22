@@ -15,9 +15,10 @@ return {
         -- -- Note: Most plugin managers will do this automatically!
         -- syntax enable
 
-        -- -- Viewer options: One may configure the viewer either by specifying a built-in
-        -- -- viewer method:
-        -- vim.g.vimtex_view_method = 'zathura'
+        -- Viewer options: One may configure the viewer either by specifying a built-in
+        -- viewer method:
+        vim.g.vimtex_view_method = 'zathura'
+        vim.g.vimtex_view_zathura_use_synctex = 0
 
         -- -- Or with a generic interface:
         -- vim.g.vimtex_view_general_viewer = 'okular'
