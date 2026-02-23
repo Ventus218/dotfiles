@@ -28,7 +28,16 @@ return {
                         ["<C-l>"] = actions.close,
                     },
                 }
-            }
+            },
+            pickers = {
+                buffers = {
+                    mappings = {
+                        n = {
+                            ["d"] = actions.delete_buffer,
+                        },
+                    },
+                },
+            },
         }
     end,
 }
