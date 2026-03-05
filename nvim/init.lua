@@ -26,7 +26,9 @@ language en_US.UTF-8
 
 nnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
+cnoremap <C-l> <C-c>
 vnoremap <C-l> <Esc>
+snoremap <C-l> <Esc>
 
 inoremap <c-space> <c-x><c-o>
 ]])
