@@ -30,6 +30,9 @@ return {
                 -- GH Actions
                 "gh_actions_ls",
 
+                -- YAML
+                "yamlls",
+
                 -- Java
                 "jdtls",
             },
