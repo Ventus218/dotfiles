@@ -142,9 +142,10 @@ local setup = {
                 map("n", "<leader>f", vim.lsp.buf.format)
                 map("n", "<leader>ca", vim.lsp.buf.code_action)
 
-                map("n", "<leader>ws", function()
-                    require("metals").hover_worksheet()
-                end)
+                -- don't need it right now, disabling as it slows down the <leader>w keymapping for writing
+                -- map("n", "<leader>ws", function()
+                --     require("metals").hover_worksheet()
+                -- end)
 
                 -- all workspace diagnostics
                 map("n", "<leader>aa", vim.diagnostic.setqflist)
