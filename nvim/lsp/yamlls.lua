@@ -1,4 +1,4 @@
-vim.lsp.config("yamlls", {
+return {
     settings = {
         yaml = {
             format = {
@@ -6,4 +6,4 @@ vim.lsp.config("yamlls", {
             }
         }
     }
-})
+}

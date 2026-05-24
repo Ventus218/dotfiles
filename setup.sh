@@ -126,6 +126,8 @@ case $DISTRO_BASE in
     brew install $COMMON
 
     brew install node@24
+
+    brew install tree-sitter-cli
     ;;
 "$DEBIAN")
     sudo apt-get update
@@ -140,6 +142,8 @@ case $DISTRO_BASE in
     # Original command was this, hope removing -E doesn't break anything
     # curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
     sudo apt-get install -y nodejs
+
+    sudo apt-get install -y tree-sitter-cli
     ;;
 "$FEDORA")
     # shellcheck disable=SC2086
@@ -149,9 +153,10 @@ case $DISTRO_BASE in
 
     sudo dnf -y install curl
 
-    sudo dnf -y install curl
     curl -fsSL https://rpm.nodesource.com/setup_24.x | sudo bash -
     sudo dnf -y install nodejs
+
+    sudo dnf -y install tree-sitter-cli
     ;;
 esac
 unset COMMON
