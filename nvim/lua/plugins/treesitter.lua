@@ -12,12 +12,13 @@ return {
             require('nvim-treesitter').install { "lua", "vim", "vimdoc", "markdown", "markdown_inline", "scala", "java", "javascript", "bash", "dockerfile" }
 
             -- Automatic install of missing parser and treesitter.start which starts highlighting
+            local excluded = { "tex", "latex" }
             vim.api.nvim_create_autocmd('FileType', {
                 callback = function(ev)
                     local lang = vim.treesitter.language.get_lang(ev.match)
                     local available_langs = require('nvim-treesitter').get_available()
                     local is_available = vim.tbl_contains(available_langs, lang)
-                    if is_available then
+                    if is_available and not vim.tbl_contains(excluded, lang) then
                         local installed_langs = require('nvim-treesitter').get_installed()
                         local installed = vim.tbl_contains(installed_langs, lang)
                         if not installed then
