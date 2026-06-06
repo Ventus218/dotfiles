@@ -35,6 +35,25 @@ check_tool_or_exit() {
     unset TOOL
 }
 
+create_symlinks() {
+    for ITEM in "$@"; do
+        SOURCE=$(echo "$ITEM" | cut -d':' -f1)
+        TARGET=$(echo "$ITEM" | cut -d':' -f2)
+        if [ -L "$TARGET" ]; then
+            echo "Removing existing symlink $TARGET"
+            unlink "$TARGET"
+        elif [ -d "$TARGET" ]; then
+            echo "Warning: $TARGET is a directory. Skipping..."
+            continue
+        elif [ -e "$TARGET" ]; then
+            echo "Warning: $TARGET already exists. Skipping..."
+            continue
+        fi
+        ln -s "$DOTFILES_DIR/$SOURCE" "$TARGET"
+        echo "Created symlink for $SOURCE"
+    done
+}
+
 # ~~~~~~~~~~~~~~~~~ Detecting OS, DISTRO_BASE and DISTRO ~~~~~~~~~~~~~~~~~
 
 # OS will be set to one of the following values in order to ease switch cases
@@ -108,29 +127,9 @@ echo "Installing (Nix) Home Manager ..."
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
-echo Deleting default home.nix file
-rm "$XDG_CONFIG_HOME/home-manager/home.nix"
-
-# ~~~~~~~~~~~~~~~~~ TODO: choose name ~~~~~~~~~~~~~~~~~
-
-create_symlinks() {
-    for ITEM in "$@"; do
-        SOURCE=$(echo "$ITEM" | cut -d':' -f1)
-        TARGET=$(echo "$ITEM" | cut -d':' -f2)
-        if [ -L "$TARGET" ]; then
-            echo "Removing existing symlink $TARGET"
-            unlink "$TARGET"
-        elif [ -d "$TARGET" ]; then
-            echo "Warning: $TARGET is a directory. Skipping..."
-            continue
-        elif [ -e "$TARGET" ]; then
-            echo "Warning: $TARGET already exists. Skipping..."
-            continue
-        fi
-        ln -s "$DOTFILES_DIR/$SOURCE" "$TARGET"
-        echo "Created symlink for $SOURCE"
-    done
-}
-
+HOME_DOT_NIX_FILE_LOCATION="$XDG_CONFIG_HOME/home-manager/home.nix"
+echo "Deleting default $HOME_DOT_NIX_FILE_LOCATION file"
+rm "$HOME_DOT_NIX_FILE_LOCATION"
+echo "Symlinking $DOTFILES_DIR/home.nix to $HOME_DOT_NIX_FILE_LOCATION"
 create_symlinks \
-    "home.nix:$XDG_CONFIG_HOME/home-manager/home.nix"
+    "home.nix:$HOME_DOT_NIX_FILE_LOCATION"
