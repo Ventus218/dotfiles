@@ -104,6 +104,18 @@ if [ -z "$DISTRO" ]; then
     DISTRO=$DISTRO_BASE
 fi
 
+# ~~~~~~~~~~~~~~~~~ Initial checks ~~~~~~~~~~~~~~~~~
+
+case "$DOTFILES_DIR" in
+"$HOME"/*) ;;
+*)
+    echo "This dotfile repo should be cloned in the user home ($HOME)."
+    echo "Move the repo there and re-run this script:"
+    echo "suggestion: mv $DOTFILES_DIR $HOME"
+    exit 1
+    ;;
+esac
+
 # ~~~~~~~~~~~~~~~~~ Install Nix ~~~~~~~~~~~~~~~~~
 
 echo Installing Nix ...
@@ -133,3 +145,7 @@ rm "$HOME_DOT_NIX_FILE_LOCATION"
 echo "Symlinking $DOTFILES_DIR/home.nix to $HOME_DOT_NIX_FILE_LOCATION"
 create_symlinks \
     "home.nix:$HOME_DOT_NIX_FILE_LOCATION"
+
+# ~~~~~~~~~~~~~~~~~ Install (Nix) Home Manager ~~~~~~~~~~~~~~~~~
+
+echo 'Finished! Now open a new shell and run "home-manager switch"'
