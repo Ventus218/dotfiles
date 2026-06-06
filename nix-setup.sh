@@ -92,7 +92,6 @@ echo Installing Nix ...
 check_tool_or_exit curl xz
 case $OS in
 "$LINUX")
-    check_tool_or_exit systemd
     sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
     ;;
 "$MACOS")
