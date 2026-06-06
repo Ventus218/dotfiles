@@ -1,0 +1,27 @@
+on: [push]
+
+jobs:
+  test-nix-setup:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["macos-latest", "ubuntu-latest"]
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./nix-setup.sh
+
+  test-nix-setup-on-fedora:
+    name: test-setup (${{ matrix.distro }})
+    runs-on: "ubuntu-latest"
+    container:
+      image: ${{ matrix.distro }}
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: ["fedora:latest", "fedora:44"]
+    steps:
+      - uses: actions/checkout@v5
+      - run: |
+          export USER=$(whoami) # home-manager installer complains if USER is unset
+          ./nix-setup.sh
