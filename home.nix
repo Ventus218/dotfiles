@@ -18,6 +18,17 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.zsh
+    pkgs.pure-prompt
+
+    pkgs.git
+    pkgs.gnumake
+    pkgs.gcc
+    pkgs.curl
+
+    pkgs.nodejs
+    pkgs.tree-sitter
+    pkgs.neovim
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
