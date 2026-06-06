@@ -55,11 +55,7 @@ setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
 
 
 # Pure (https://github.com/sindresorhus/pure)
-if [[ "$OSTYPE" == darwin* ]]; then
-    fpath+=("$(brew --prefix)/share/zsh/site-functions")
-else
-    fpath+=($HOME/.zsh/pure)
-fi
+fpath+=($HOME/.nix-profile/share/zsh/site-functions)
 autoload -U promptinit; promptinit
 prompt pure
 
