@@ -23,7 +23,13 @@ return {
             },
             -- We generally prioritize the lsp formatter and use these as fallbacks
             default_format_opts = { lsp_format = "prefer" },
-            format_on_save = {},
+            format_on_save = function()
+                if vim.fs.root(0, ".obsidian") then
+                    return nil -- disable on-save formatting when in obsidian vault
+                else
+                    return {}
+                end
+            end,
         })
         -- formatexpr is used when typing "gq" and now triggers conform
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"

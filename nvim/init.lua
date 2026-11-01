@@ -18,6 +18,8 @@ set shiftwidth=4
 set softtabstop=-1
 set expandtab
 
+set conceallevel=2
+
 set splitbelow
 set splitright
 set winborder=rounded
