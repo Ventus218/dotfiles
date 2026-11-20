@@ -12,10 +12,13 @@ jobs:
         os: ["ubuntu-latest", "macos-15-intel"]
     steps:
       - uses: actions/checkout@v5
-      - run: ./nix-setup.sh
+      # `--build` only builds the activation package: a real activation checks
+      # that $USER matches home.username, which is `alessandro` for both hosts,
+      # not `runner` on GitHub-hosted runners.
+      - run: ./nix-setup.sh --build
 
   test-nix-setup-on-fedora:
-    name: test-setup (${{ matrix.distro }})
+    name: test-nix-setup (${{ matrix.distro }})
     runs-on: "ubuntu-latest"
     timeout-minutes: 40
     container:
@@ -26,4 +29,4 @@ jobs:
         distro: ["fedora:latest", "fedora:44"]
     steps:
       - uses: actions/checkout@v5
-      - run: ./nix-setup.sh
+      - run: ./nix-setup.sh --build

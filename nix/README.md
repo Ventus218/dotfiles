@@ -40,12 +40,17 @@ makes the setup reproducible.
 ## Pinned to 26.05 on purpose
 
 `x86_64-darwin` (Intel macOS) is supported by nixpkgs **26.05 only**; 26.11+
-dropped it and nixpkgs 26.05 reaches end of support at the end of 2026. When
-the Mac is replaced (Apple Silicon) or Linux-only, bump both inputs in
-`flake.nix` and update `hosts.mac`.
+dropped it and nixpkgs 26.05 reaches end of support at the end of 2026. Nix
+itself dropped Intel-macOS binaries in 2.36, so `nix-setup.sh` pins the
+**2.35.1** installer for Intel Macs. When the Mac is replaced (Apple Silicon)
+or Linux-only, bump the inputs in `flake.nix`, update `hosts.mac` and drop the
+installer pin.
 
 CI mirrors this: `test_flake.yaml` evaluates every host on Linux and builds
-each host on a native runner (`macos-15-intel` is the last Intel image).
+each host on a native runner (`macos-15-intel` is the last Intel image), and
+`test_nix_setup.yaml` bootstraps with `--build` (building the activation
+package without touching `$HOME`; a real activation requires `$USER` to match
+`home.username`).
 
 ## Later, when you want it
 
