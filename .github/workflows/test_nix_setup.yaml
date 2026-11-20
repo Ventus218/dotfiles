@@ -3,10 +3,13 @@ on: [push]
 jobs:
   test-nix-setup:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
-        os: ["macos-latest", "ubuntu-latest"]
+        # The flake's `mac` host is x86_64-darwin, so it needs the Intel
+        # macOS runner image; `macos-latest` is Apple Silicon.
+        os: ["ubuntu-latest", "macos-15-intel"]
     steps:
       - uses: actions/checkout@v5
       - run: ./nix-setup.sh
@@ -14,6 +17,7 @@ jobs:
   test-nix-setup-on-fedora:
     name: test-setup (${{ matrix.distro }})
     runs-on: "ubuntu-latest"
+    timeout-minutes: 40
     container:
       image: ${{ matrix.distro }}
     strategy:
@@ -22,6 +26,4 @@ jobs:
         distro: ["fedora:latest", "fedora:44"]
     steps:
       - uses: actions/checkout@v5
-      - run: |
-          export USER=$(whoami) # home-manager installer complains if USER is unset
-          ./nix-setup.sh
+      - run: ./nix-setup.sh

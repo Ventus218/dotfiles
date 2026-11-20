@@ -5,15 +5,9 @@ export EDITOR=nvim
 
 # Directories
 
-# Follow .zshrc symlink
-DOTFILES=$(readlink "$HOME/.zshrc")
-if [ -n "$DOTFILES" ]; then
-    # We assume its target is inside the dotfiles repo
-    export DOTFILES=$(dirname "$DOTFILES")
-else
-    echo "Unable to find the dotfiles repo"
-    unset DOTFILES
-fi
+# Home Manager symlinks ~/.zshrc through the nix store, so `readlink ~/.zshrc`
+# no longer points at the repo. nix-setup.sh guarantees this location instead.
+export DOTFILES="$HOME/dotfiles"
 
 
 # ~~~~~~~~~~~~~~~ VI mode ~~~~~~~~~~~~~~~~~~~~~~~~

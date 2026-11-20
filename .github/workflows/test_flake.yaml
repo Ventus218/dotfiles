@@ -1,0 +1,52 @@
+name: test-flake
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Evaluation catches the majority of breakage (option typos, conflicting
+  # home.file targets, unsupported systems) without building anything.
+  eval:
+    name: eval (${{ matrix.host }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [mac, linux]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v32
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Evaluate ${{ matrix.host }}
+        run: nix eval --raw ".#homeConfigurations.${{ matrix.host }}.activationPackage.drvPath"
+
+  # A real build, on the native architecture of each host.
+  build:
+    name: build (${{ matrix.host }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: linux
+            os: ubuntu-latest
+          # macos-15-intel is the last Intel macOS runner image; the `mac`
+          # host is x86_64-darwin, so Apple Silicon runners cannot build it.
+          - host: mac
+            os: macos-15-intel
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v32
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Build ${{ matrix.host }} activation package
+        run: nix build -L ".#homeConfigurations.${{ matrix.host }}.activationPackage"
