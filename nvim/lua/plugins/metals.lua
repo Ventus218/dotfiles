@@ -110,6 +110,7 @@ local setup = {
             metals_config.settings = {
                 showImplicitArguments = true,
                 excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+                bloopVersion = "2.1.3",
             }
 
             -- *READ THIS*
